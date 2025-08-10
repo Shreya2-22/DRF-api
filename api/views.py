@@ -5,6 +5,11 @@ from . models import Product, Order, OrderItem
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.db.models import Max
+# from rest_framework import generics
+
+# class ProductListAPIView(generics.ListAPIView):
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
 
 @api_view(['GET'])
 def product_list(request):
@@ -22,7 +27,7 @@ def product_detail(request, pk):
 
 @api_view(['GET'])
 def order_list(request):
-    orders = Order.objects.all()
+    orders = Order.objects.prefetch_related('items__product')
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
