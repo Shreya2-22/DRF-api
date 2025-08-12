@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from . serializers import ProductSerializer, OrderSerializer, ProductInfoSerializer, OrderCreateSerializer
-from . models import Product, Order, OrderItem
+from . serializers import ProductSerializer, OrderSerializer, ProductInfoSerializer, OrderCreateSerializer, UserSerializer
+from . models import Product, Order, OrderItem, User
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, action
 from django.db.models import Max
@@ -84,5 +84,10 @@ class ProductInfoAPIView(APIView):
             'count':len(products),
             'max_price':products.aggregate(max_price = Max('price'))['max_price']
         })
-        return Response(serializer.data)
+        return Response(serializer.data)\
+        
 
+class UserListView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    pagination_class = None
