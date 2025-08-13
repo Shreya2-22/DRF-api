@@ -128,8 +128,8 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
-    'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE':2
+    # 'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE':2
 }
 
 SPECTACULAR_SETTINGS = {
@@ -137,4 +137,14 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'A simple product and order API that helps us to learn Django',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False
+}
+
+CACHES = {
+    "default": {
+        "BACKEND":"django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        }
+    }
 }
